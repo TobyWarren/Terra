@@ -59,7 +59,7 @@ object Versions {
         const val reflectionRemapper = "0.1.1"
         const val paperDevBundle = paperBuild
         const val runPaper = "2.3.0"
-        const val paperWeight = "1.7.0"
+        const val paperWeight = "1.7.1"
     }
     
     //
