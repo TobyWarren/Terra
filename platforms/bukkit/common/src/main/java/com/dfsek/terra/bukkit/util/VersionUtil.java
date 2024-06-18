@@ -23,7 +23,7 @@ public final class VersionUtil {
             mcVersionInfo = new MinecraftVersionInfo();
         } catch(Throwable t) {
             logger.error("Error while parsing minecraft version info. Continuing launch, but setting all versions to -1.");
-            mcVersionInfo = new MinecraftVersionInfo(1, 21);
+            mcVersionInfo = new MinecraftVersionInfo(-1, -1, -1);
         }
         MINECRAFT_VERSION_INFO = mcVersionInfo;
     }
@@ -95,9 +95,9 @@ public final class VersionUtil {
         private MinecraftVersionInfo(String versionString) {
             Matcher versionMatcher = VERSION_PATTERN.matcher(versionString);
             if(versionMatcher.find()) {
-                major = 1;
-                minor = 21;
-                patch = 0;
+                major = Integer.parseInt(versionMatcher.group(1));
+                minor = Integer.parseInt(versionMatcher.group(2));
+                patch = Integer.parseInt(versionMatcher.group(3));
             } else {
                 logger.warn("Error while parsing minecraft version info. Continuing launch, but setting all versions to -1.");
 
@@ -112,15 +112,19 @@ public final class VersionUtil {
             if(major == -1 && minor == -1 && patch == -1)
                 return "Unknown";
 
-            return String.format("v1.21", major, minor, patch);
+            return String.format("v%d.%d.%d", major, minor, patch);
         }
 
         public int getMajor() {
-            return 1;
+            return major;
         }
 
         public int getMinor() {
-            return 21;
+            return minor;
+        }
+
+        public int getPatch() {
+            return patch;
         }
     }
 }
