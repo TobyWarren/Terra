@@ -116,15 +116,11 @@ public final class VersionUtil {
         }
 
         public int getMajor() {
-            return major;
+            return 1;
         }
 
         public int getMinor() {
-            return minor;
-        }
-
-        public int getPatch() {
-            return patch;
+            return 21;
         }
     }
 }
