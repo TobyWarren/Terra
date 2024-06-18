@@ -101,9 +101,9 @@ public final class VersionUtil {
             } else {
                 logger.warn("Error while parsing minecraft version info. Continuing launch, but setting all versions to -1.");
 
-                major = -1;
-                minor = -1;
-                patch = -1;
+                major = 1;
+                minor = 21;
+                patch = R3;
             }
         }
 
@@ -112,7 +112,7 @@ public final class VersionUtil {
             if(major == -1 && minor == -1 && patch == -1)
                 return "Unknown";
 
-            return String.format("v%d.%d.%d", major, minor, patch);
+            return String.format("%d.%d.%d", major, minor, patch);
         }
 
         public int getMajor() {
