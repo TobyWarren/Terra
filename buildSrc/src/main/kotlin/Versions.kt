@@ -8,7 +8,7 @@ object Versions {
         const val paralithic = "0.7.1"
         const val strata = "1.3.2"
         
-        const val cloud = "1.8.4"
+        const val cloud = "1.9.0"
         
         const val caffeine = "3.1.8"
         
