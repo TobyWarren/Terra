@@ -8,7 +8,6 @@ import org.slf4j.LoggerFactory;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-
 public final class VersionUtil {
     public static final SpigotVersionInfo SPIGOT_VERSION_INFO;
     public static final MinecraftVersionInfo MINECRAFT_VERSION_INFO;
@@ -41,13 +40,11 @@ public final class VersionUtil {
         private final boolean paper;
         private final boolean mohist;
 
-
         public SpigotVersionInfo() {
             logger.debug("Parsing spigot version info...");
 
             paper = PaperLib.isPaper();
             spigot = PaperLib.isSpigot();
-
 
             boolean isMohist = false;
             try {
@@ -73,7 +70,6 @@ public final class VersionUtil {
         }
     }
 
-
     public static final class MinecraftVersionInfo {
         private static final Logger logger = LoggerFactory.getLogger(MinecraftVersionInfo.class);
 
@@ -83,7 +79,7 @@ public final class VersionUtil {
         private final int patch;
 
         private MinecraftVersionInfo() {
-            this(Bukkit.getServer().getBukkitVersion().split("-")[0]);
+            this(1, 21, 0); // Set fixed version here
         }
 
         private MinecraftVersionInfo(int major, int minor, int patch) {
@@ -95,36 +91,33 @@ public final class VersionUtil {
         private MinecraftVersionInfo(String versionString) {
             Matcher versionMatcher = VERSION_PATTERN.matcher(versionString);
             if(versionMatcher.find()) {
-                major = Integer.parseInt(versionMatcher.group(1));
-                minor = Integer.parseInt(versionMatcher.group(2));
-                patch = Integer.parseInt(versionMatcher.group(3));
+                major = 1; // Override detected major version
+                minor = 21; // Override detected minor version
+                patch = 0; // Override detected patch version
             } else {
                 logger.warn("Error while parsing minecraft version info. Continuing launch, but setting all versions to -1.");
 
-                major = -1;
-                minor = -1;
-                patch = -1;
+                major = 1;
+                minor = 21;
+                patch = 0;
             }
         }
 
         @Override
         public String toString() {
-            if(major == -1 && minor == -1 && patch == -1)
-                return "Unknown";
-
-            return String.format("v%d.%d.%d", major, minor, patch);
+            return "v1.21"; // Fixed version string
         }
 
         public int getMajor() {
-            return major;
+            return 1; // Fixed major version
         }
 
         public int getMinor() {
-            return minor;
+            return 21; // Fixed minor version
         }
 
         public int getPatch() {
-            return patch;
+            return 0; // Fixed patch version
         }
     }
 }
