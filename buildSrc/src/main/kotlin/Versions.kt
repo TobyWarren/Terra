@@ -8,7 +8,7 @@ object Versions {
         const val paralithic = "0.7.1"
         const val strata = "1.3.2"
         
-        const val cloud = "2.0.0-rc.2"
+        const val cloud = "1.8.4"
         
         const val caffeine = "3.1.8"
         
@@ -36,11 +36,11 @@ object Versions {
 //    }
     
     object Mod {
-        const val mixin = "0.12.5+mixin.0.8.5"
+        const val mixin = "0.14.0+mixin.0.8.6"
         
-        const val minecraft = "1.20.6"
+        const val minecraft = "1.21"
         const val yarn = "$minecraft+build.1"
-        const val fabricLoader = "0.15.10"
+        const val fabricLoader = "0.15.11"
         
         const val architecuryLoom = "1.6.395"
         const val architecturyPlugin = "3.4.155"
