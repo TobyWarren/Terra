@@ -105,7 +105,7 @@ public final class VersionUtil {
 
         @Override
         public String toString() {
-            return "v1.21.1"; // Fixed version string
+            return "1.21.1"; // Fixed version string
         }
 
         public int getMajor() {
