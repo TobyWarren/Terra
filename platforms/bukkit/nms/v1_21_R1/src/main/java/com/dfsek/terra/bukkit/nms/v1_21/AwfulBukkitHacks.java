@@ -1,4 +1,4 @@
-package com.dfsek.terra.bukkit.nms.v1_21;
+package com.dfsek.terra.bukkit.nms.v1_21_R1;
 
 import com.google.common.collect.ImmutableMap;
 import net.minecraft.core.Holder;
