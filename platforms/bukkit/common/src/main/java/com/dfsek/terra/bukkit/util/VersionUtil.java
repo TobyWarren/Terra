@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+
 public final class VersionUtil {
     public static final SpigotVersionInfo SPIGOT_VERSION_INFO;
     public static final MinecraftVersionInfo MINECRAFT_VERSION_INFO;
@@ -40,11 +41,13 @@ public final class VersionUtil {
         private final boolean paper;
         private final boolean mohist;
 
+
         public SpigotVersionInfo() {
             logger.debug("Parsing spigot version info...");
 
             paper = PaperLib.isPaper();
             spigot = PaperLib.isSpigot();
+
 
             boolean isMohist = false;
             try {
@@ -70,16 +73,17 @@ public final class VersionUtil {
         }
     }
 
+
     public static final class MinecraftVersionInfo {
         private static final Logger logger = LoggerFactory.getLogger(MinecraftVersionInfo.class);
 
-        private static final Pattern VERSION_PATTERN = Pattern.compile("(\\d+)\\.(\\d+)\\.(\\d+)");
+        private static final Pattern VERSION_PATTERN = Pattern.compile("(\\d+)\\.(\\d+)(?:\\.(\\d+))?");
         private final int major;
         private final int minor;
         private final int patch;
 
         private MinecraftVersionInfo() {
-            this(1, 21, 0); // Set fixed version here
+            this(Bukkit.getServer().getBukkitVersion().split("-")[0]);
         }
 
         private MinecraftVersionInfo(int major, int minor, int patch) {
@@ -91,33 +95,40 @@ public final class VersionUtil {
         private MinecraftVersionInfo(String versionString) {
             Matcher versionMatcher = VERSION_PATTERN.matcher(versionString);
             if(versionMatcher.find()) {
-                major = 1; // Override detected major version
-                minor = 21; // Override detected minor version
-                patch = 0; // Override detected patch version
+                major = Integer.parseInt(versionMatcher.group(1));
+                minor = Integer.parseInt(versionMatcher.group(2));
+                patch = versionMatcher.group(3) != null ? Integer.parseInt(versionMatcher.group(3)) : -1;
             } else {
                 logger.warn("Error while parsing minecraft version info. Continuing launch, but setting all versions to -1.");
 
-                major = 1;
-                minor = 21;
-                patch = 0;
+                major = -1;
+                minor = -1;
+                patch = -1;
             }
         }
 
         @Override
         public String toString() {
-            return "1.21.1"; // Fixed version string
+            if(major == -1 && minor == -1 && patch == -1)
+                return "Unknown";
+
+            if (patch >= 0) {
+                return String.format("v%d.%d.%d", major, minor, patch);
+            } else {
+                return String.format("v%d.%d", major, minor);
+            }
         }
 
         public int getMajor() {
-            return 1; // Fixed major version
+            return major;
         }
 
         public int getMinor() {
-            return 21; // Fixed minor version
+            return minor;
         }
 
         public int getPatch() {
-            return 0; // Fixed patch version
+            return patch;
         }
     }
 }
