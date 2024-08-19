@@ -40,7 +40,7 @@ object Versions {
     object Mod {
         const val mixin = "0.12.5+mixin.0.8.5"
         
-        const val minecraft = "1.20.6"
+        const val minecraft = "1.21.1"
         const val yarn = "$minecraft+build.1"
         const val fabricLoader = "0.15.10"
         
@@ -54,7 +54,7 @@ object Versions {
 //    }
     
     object Bukkit {
-        const val minecraft = "1.21"
+        const val minecraft = "1.21.1"
         const val paperBuild = "$minecraft-R0.1-SNAPSHOT"
         const val paper = paperBuild
         const val paperLib = "1.0.8"
