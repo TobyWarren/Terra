@@ -31,7 +31,7 @@ loom {
 
 tasks {
     compileJava {
-        options.release.set(17)
+        options.release.set(21)
     }
 
     remapJar {
