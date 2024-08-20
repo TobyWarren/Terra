@@ -1,0 +1,9 @@
+name: "Terra"
+main: "com.dfsek.terra.bukkit.TerraBukkitPlugin"
+version: "6.5.0-BETA+e9c19e280"
+load: "STARTUP"
+author: dfsek
+website: "https://github.com/PolyhedralDev/Terra/wiki"
+api-version: "1.20"
+description: "A modern voxel world generation modding platform"
+folia-supported: true
