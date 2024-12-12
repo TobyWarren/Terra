@@ -40,7 +40,7 @@ object Versions {
     object Mod {
         const val mixin = "0.15.3+mixin.0.8.7"
         
-        const val minecraft = "1.21.3"
+        const val minecraft = "1.21.4"
         const val yarn = "$minecraft+build.2"
         const val fabricLoader = "0.16.7"
         
@@ -55,14 +55,14 @@ object Versions {
 //    }
     
     object Bukkit {
-        const val minecraft = "1.21.3"
-        const val paperBuild = "$minecraft-R0.1-20241101.150401-13"
+        const val minecraft = "1.21.4"
+        const val paperBuild = "$minecraft-R0.1-20241211.212446-17"
         const val paper = paperBuild
         const val paperLib = "1.0.8"
         const val reflectionRemapper = "0.1.1"
         const val paperDevBundle = paperBuild
         const val runPaper = "2.3.1"
-        const val paperWeight = "1.7.2"
+        const val paperWeight = "1.7.4"
         const val cloud = "2.0.0-beta.10"
     }
     
