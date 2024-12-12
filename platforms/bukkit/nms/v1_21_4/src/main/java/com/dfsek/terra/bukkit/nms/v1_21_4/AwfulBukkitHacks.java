@@ -1,6 +1,6 @@
-package com.dfsek.terra.bukkit.nms.v1_21_3;
+package com.dfsek.terra.bukkit.nms.v1_21_4;
 
-import com.dfsek.terra.bukkit.nms.v1_21_3.config.VanillaBiomeProperties;
+import com.dfsek.terra.bukkit.nms.v1_21_4.config.VanillaBiomeProperties;
 
 import net.minecraft.core.Holder;
 import net.minecraft.core.Holder.Reference;
