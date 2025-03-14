@@ -6,7 +6,7 @@ repositories {
 
 dependencies {
     api(project(":platforms:bukkit:common"))
-    paperDevBundle(Versions.Bukkit.paperDevBundle)
+    paperweight.paperDevBundle("1.21.1-R0.1-SNAPSHOT")
     implementation("xyz.jpenilla", "reflection-remapper", Versions.Bukkit.reflectionRemapper)
 }
 
