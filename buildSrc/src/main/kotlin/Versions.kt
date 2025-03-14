@@ -61,7 +61,7 @@ object Versions {
         const val reflectionRemapper = "0.1.1"
         const val paperDevBundle = "$minecraft-R0.1-20240812.073803-10"
         const val runPaper = "2.3.0"
-        const val paperWeight = "1.7.2"
+        const val paperWeight = "1.7.7"
     }
     
     //
