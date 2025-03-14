@@ -3,7 +3,7 @@ plugins {
 }
 
 repositories {
-    maven("https://s01.oss.sonatype.org/content/repositories/snapshots/") {
+    maven("https://repo.papermc.io/service/rest/repository/browse/maven-public/") {
         name = "Sonatype"
     }
 }
