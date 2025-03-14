@@ -115,11 +115,12 @@ public class BukkitMobSpawner extends BukkitBlockEntity implements MobSpawner {
         SerialState.parse(state).forEach((k, v) -> {
             switch(k) {
                 case "type" -> {
-                    // Remove the "MINECRAFT:" prefix if present
-                    String mob = v;
-                    if(mob.startsWith("MINECRAFT:")) {
+                    // Remove the "MINECRAFT:" prefix in a case-insensitive way, trim and convert to uppercase.
+                    String mob = v.trim();
+                    if(mob.toUpperCase().startsWith("MINECRAFT:")) {
                         mob = mob.substring("MINECRAFT:".length());
                     }
+                    mob = mob.trim().toUpperCase();
                     setSpawnedType(BukkitUtils.getEntityType(mob));
                 }
                 case "delay" -> setDelay(Integer.parseInt(v));
