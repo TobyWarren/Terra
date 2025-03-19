@@ -21,6 +21,7 @@ includeImmediateChildren(file("platforms"), "platform")
 includeImmediateChildren(file("platforms/bukkit/nms"), "Bukkit NMS")
 
 include(":platforms:bukkit:common")
+include(":platforms:minestom:example")
 
 pluginManagement {
     repositories {
@@ -36,6 +37,9 @@ pluginManagement {
         }
         maven("https://maven.quiltmc.org/repository/release/") {
             name = "Quilt"
+        }
+        maven("https://repo.papermc.io/repository/maven-public/") {
+            name = "PaperMC"
         }
     }
 }
