@@ -21,7 +21,6 @@ includeImmediateChildren(file("platforms"), "platform")
 includeImmediateChildren(file("platforms/bukkit/nms"), "Bukkit NMS")
 
 include(":platforms:bukkit:common")
-include(":platforms:minestom:example")
 
 pluginManagement {
     repositories {
