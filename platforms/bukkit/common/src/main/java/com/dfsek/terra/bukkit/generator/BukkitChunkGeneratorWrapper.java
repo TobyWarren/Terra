@@ -17,111 +17,61 @@
 
 package com.dfsek.terra.bukkit.generator;
 
-import org.bukkit.World;
-import org.bukkit.generator.BiomeProvider;
-import org.bukkit.generator.BlockPopulator;
-import org.bukkit.generator.WorldInfo;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import java.util.List;
-import java.util.Random;
-
 import com.dfsek.terra.api.block.state.BlockState;
 import com.dfsek.terra.api.config.ConfigPack;
 import com.dfsek.terra.api.world.chunk.generation.ChunkGenerator;
-import com.dfsek.terra.api.world.chunk.generation.util.GeneratorWrapper;
-import com.dfsek.terra.api.world.info.WorldProperties;
-import com.dfsek.terra.bukkit.world.BukkitWorldProperties;
+import com.dfsek.terra.api.world.chunk.generation.ProtoWorld;
+import org.bukkit.World;
+import org.bukkit.generator.BlockPopulator;
+import org.bukkit.generator.ChunkGenerator.BiomeGrid;
+import org.bukkit.generator.ChunkGenerator.ChunkData;
+import org.bukkit.generator.ChunkGenerator;
+import org.jetbrains.annotations.NotNull;
 
+import java.util.Collections;
+import java.util.List;
+import java.util.Random;
 
-public class BukkitChunkGeneratorWrapper extends org.bukkit.generator.ChunkGenerator implements GeneratorWrapper {
-    private static final Logger LOGGER = LoggerFactory.getLogger(BukkitChunkGeneratorWrapper.class);
+/**
+ * 1.16.5-safe wrapper: avoids org.bukkit.generator.WorldInfo and other 1.17+ APIs.
+ */
+public class BukkitChunkGeneratorWrapper extends ChunkGenerator {
+    private final ChunkGenerator delegate;
+    private final ConfigPack pack;
     private final BlockState air;
-    private final BukkitBlockPopulator blockPopulator;
-    private ChunkGenerator delegate;
-    private ConfigPack pack;
-
 
     public BukkitChunkGeneratorWrapper(ChunkGenerator delegate, ConfigPack pack, BlockState air) {
         this.delegate = delegate;
         this.pack = pack;
         this.air = air;
-        this.blockPopulator = new BukkitBlockPopulator(pack, air);
-    }
-
-    public void setDelegate(ChunkGenerator delegate) {
-        this.delegate = delegate;
     }
 
     @Override
-    public @Nullable BiomeProvider getDefaultBiomeProvider(@NotNull WorldInfo worldInfo) {
-        return new BukkitBiomeProvider(pack.getBiomeProvider());
-    }
+    public @NotNull ChunkData generateChunkData(@NotNull World world,
+                                                @NotNull Random random,
+                                                int x, int z,
+                                                @NotNull BiomeGrid biomeGrid) {
+        // Create empty target buffer for Bukkit
+        ChunkData out = createChunkData(world);
 
-    @Override
-    public void generateNoise(@NotNull WorldInfo worldInfo, @NotNull Random random, int x, int z, @NotNull ChunkData chunkData) {
-        BukkitWorldProperties properties = new BukkitWorldProperties(worldInfo);
-        delegate.generateChunkData(new BukkitProtoChunk(chunkData), properties, pack.getBiomeProvider(), x, z);
+        // Build Terra proto world just for this chunk
+        BukkitProtoWorld proto = new BukkitProtoWorld(world, x, z, air, pack.getBiomeProvider());
+
+        // Run Terra generation once (no re-entrancy)
+        delegate.generate(proto);
+
+        // Copy the proto result into Bukkit's ChunkData
+        BukkitProtoWorld.copyToChunkData(proto, out, biomeGrid);
+
+        return out;
     }
 
     @Override
     public @NotNull List<BlockPopulator> getDefaultPopulators(@NotNull World world) {
-        return List.of(blockPopulator);
+        // Keep empty on 1.16.x to avoid newer BlockPopulator/LimitedRegion APIs.
+        return Collections.emptyList();
     }
-
-    @Override
-    public boolean shouldGenerateCaves() {
-        return false;
-        //return pack.vanillaCaves();
-    }
-
-    @Override
-    public boolean shouldGenerateDecorations() {
-        return true;
-    }
-
-    @Override
-    public boolean shouldGenerateMobs() {
-        return true;
-    }
-
-    @Override
-    public boolean shouldGenerateStructures() {
-        return true;
-    }
-
-    public ConfigPack getPack() {
-        return pack;
-    }
-
-    public void setPack(ConfigPack pack) {
-        this.pack = pack;
-        setDelegate(pack.getGeneratorProvider().newInstance(pack));
-    }
-
-    @Override
-    public ChunkGenerator getHandle() {
-        return delegate;
-    }
-
-
-    private record SeededVector(int x, int z, WorldProperties worldProperties) {
-        @Override
-        public boolean equals(Object obj) {
-            if(obj instanceof SeededVector that) {
-                return this.z == that.z && this.x == that.x && this.worldProperties.equals(that.worldProperties);
-            }
-            return false;
-        }
-
-        @Override
-        public int hashCode() {
-            int code = x;
-            code = 31 * code + z;
-            return 31 * code + worldProperties.hashCode();
+}
         }
     }
 }
